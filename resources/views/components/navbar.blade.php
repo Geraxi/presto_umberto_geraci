@@ -5,9 +5,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      < class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ route('homepage') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{{ route('article.index') }}">Tutti gli articoli</a>
         </li>
         @auth
         <li class="nav-item dropdown">
@@ -20,6 +23,26 @@
             <form action="{{ route('logout') }}" method="post" class="d-none" id="form-logout"@csrf></form>
           </ul>
         </li>
+        
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorie
+          </a>
+          <ul class="dropdown-menu">
+            @foreach ($categories as $category)
+            <li><a class="dropdown-item text-capitalize" href="{{ $category->name }}">{{ $category->name }}</a></li>
+            @if (!$loop->last)
+            <hr class="dropdown-divider">
+            @endif
+            @endforeach
+            
+            
+          </ul>
+        </li>
+        
+          
          @else
          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
