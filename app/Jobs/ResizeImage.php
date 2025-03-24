@@ -3,37 +3,39 @@
 namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\Queueable;
 use Spatie\Image\Image;
+use Spatie\Image\Manipulations;
+
 class ResizeImage implements ShouldQueue
 {
-    use Queueable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     */
+    private string $path;
+    private string $fileName;
+    private int $w;
+    private int $h;
 
-     private $w,$h,$filename,$path;
-    public function __construct($filepath,$w,$h)
+    public function __construct(string $filepath, int $w, int $h)
     {
-        $this->path= dirnmae($filepath);
-        $this->fileName= basename($filePath);
+        $this->path = dirname($filepath);
+        $this->fileName = basename($filepath);
         $this->w = $w;
-        $this->h =$h;
+        $this->h = $h;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-        $w= $this->w;
-        $h= $this->h;
-        $srcPath= storage_path() . '/app/public/' . $this->path . '/' . $this->fileName;
-        $destPath= storage_path() . '/app/public/' . $this->path . "/crop_{$w}x{$h}_" . $this->fileName;
+        $w = $this->w;
+        $h = $this->h;
+        $srcPath = storage_path('app/public/' . $this->path . '/' . $this->fileName);
+        $destPath = storage_path('app/public/' . $this->path . "/crop_{$w}x{$h}_" . $this->fileName);
 
         Image::load($srcPath)
-        ->crop($w, $h, CropPosition::Center)
-        ->save($destPath);
+            ->crop(Manipulations::CROP_CENTER, $w, $h)
+            ->save($destPath);
     }
 }
