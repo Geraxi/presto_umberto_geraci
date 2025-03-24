@@ -78,6 +78,28 @@ class CreateArticleForm extends Component
         }
     }
 
+    public function store()
+    {
+        $this->validate();
+        $this->article= Article::create([
+            'title'=> $this-> price,
+            'description' => $this->description,
+            'price'=>$this->price,
+            'category_id'=>Auth::id()
+        ]);
+        if(count($this->images)->0){
+            foreach($this->images as $image){
+                $newFileName="articles/{$this->article->id)";
+                $newImage= $this->article->images()->create(['path' => $image->store($newFileName,'public')]);
+                dispatch(new ResizeImage($newImage->path,300,300));
+            }
+            File::deleteDirectory(storage_path('/app/livewire-tap'));
+        }
+        session()->flash('success','Articolo creato correttamente');
+        $this->cleanForm();
+
+    }
+
    
 
     public function render()
