@@ -7,8 +7,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\Queueable;
+use Spatie\Image\Enums\CropPosition;
 use Spatie\Image\Image;
 use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Unit;
 
 class ResizeImage implements ShouldQueue
 {
@@ -35,7 +37,15 @@ class ResizeImage implements ShouldQueue
         $destPath = storage_path('app/public/' . $this->path . "/crop_{$w}x{$h}_" . $this->fileName);
 
         Image::load($srcPath)
-            ->crop(Manipulations::CROP_CENTER, $w, $h)
+            ->crop($w, $h, CropPosition::Center)
+            ->watermark(
+                base_path('resources/img/watermark.png'),
+                width:50,
+                height:50,
+                paddingX:5,
+                paddingY:5,
+                paddingUnit: Unit::Percent
+            )
             ->save($destPath);
     }
 }
