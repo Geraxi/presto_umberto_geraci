@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . env('GOOGLE_APPLICATION_CREDENTIALS'));
+
         Paginator::useBootstrap();
         if(Schema::hasTable('categories')){
             View::share('categories',Category::orderBy('name')->get());
