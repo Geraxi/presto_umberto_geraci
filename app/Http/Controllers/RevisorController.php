@@ -13,7 +13,6 @@ class RevisorController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
         $this->middleware(['auth'])->except(['becomeRevisor']);
         $this->middleware(['isRevisor'])->except(['becomeRevisor']);
     }
