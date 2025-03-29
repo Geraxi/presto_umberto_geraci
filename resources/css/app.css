@@ -1,4 +1,19 @@
 @import './style.css';
-@import 'bootstrap';
-@import 'bootstrap-icons';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+/* Custom styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#app {
+    flex: 1;
+}
+
+.footer {
+    margin-top: auto;
+}
 

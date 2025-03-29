@@ -26,7 +26,7 @@
     </div>
       <div class="d-flex justify-content-center">
         <div>
-            {{ $article->links() }}
+            {{ $articles->links() }}
         </div>
       </div>
 

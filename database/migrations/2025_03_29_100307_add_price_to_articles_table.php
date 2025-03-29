@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->boolean('is_accepted')->nullable()->after('user_id');
+            $table->decimal('price', 8, 2)->after('body');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->dropColumn('is_accepted');
+            $table->dropColumn('price');
         });
     }
 };

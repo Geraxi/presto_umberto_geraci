@@ -1,46 +1,63 @@
-<x-layout>
-    <div class="container pt-5">
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
-                <h1 class="display-4 pt-5">
-                    Registrati
-                </h1>
+@extends('layouts.app')
+
+@section('content')
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Register') }}</div>
+
+                <div class="card-body">
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ __('Name') }}</label>
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">{{ __('Password') }}</label>
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        </div>
+
+                        <div class="mb-0">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Register') }}
+                            </button>
+                            <a class="btn btn-link" href="{{ route('login') }}">
+                                {{ __('Already have an account?') }}
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-
     </div>
-    <div class="row justify-content-center align-items-center height-custom">
-        <div class="col-12 col-md-6">
-            <form method="POST" action="{{ route('register') }}" class="bg-secondary-subtle shadow rounded p-5">
-                @csrf
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nome: </label>
-                    <input type="text" class="form-control" id="name" name="name">
-                    
-                </div>
-                <div class="mb-3">
-                    <label for="registerEmail" class="form-label">Indirizzo email</label>
-                    <input type="email" class="form-control" id="registerEmail" name="email">
-                    
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password :</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                </div>
-
-                <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">Conferma la password:</label>
-                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-                </div>
-
-                 <div class="d-flex justify-content-center">
-                
-                  <button type="submit" class="btn btn-primary">Registrati</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-
-</x-layout>
+</div>
+@endsection
