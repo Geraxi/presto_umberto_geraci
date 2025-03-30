@@ -49,9 +49,9 @@ class DatabaseSeeder extends Seeder
         $categories = Category::all();
         foreach ($categories as $category) {
             Article::create([
-                'title' => "Sample {$category->name} Article",
-                'body' => "This is a sample article for the {$category->name} category. It contains some example content to demonstrate how articles appear on the site.",
-                'price' => rand(10, 1000),
+                'title' => 'Articolo di Elettronica',
+                'body' => 'Questo è un articolo di esempio per la categoria elettronica. Contiene del contenuto dimostrativo per mostrare come gli articoli appaiono sul sito.',
+                'price' => 299.99,
                 'user_id' => $admin->id,
                 'category_id' => $category->id,
                 'is_accepted' => true,

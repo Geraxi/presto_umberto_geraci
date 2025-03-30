@@ -1,12 +1,23 @@
-<div class="card mx-auto card-w shadow text-center mb-3">
-  <img src="{{ $article->images->isNotEmpty() ? $article->images->first()->geturl(300,300) : 'https://picsum.photos/200' }}"  class="card-img-top" alt="Immagine dell'articolo {{$article->title}}">
-  <div class="card-body">
-    <h4 class="card-title">{{$article->title}}</h4>
-     <h6 class="card-subtitle text-body-secondary">{{$article->price}} €</h6>
-     <div class="d-flex justify-content-center align-items-center mt-5">
-    
-    <a href="{{ route('article.show',compact('article')) }}" class="btn btn-primary">Dettaglio</a>
-    <a href="{{ route('article.byCategory',['category'=> $article->category]) }}" class="btn btn-outline-info">Categoria</a>
+@props(['article'])
+
+<div class="card h-100">
+    @if($article->images->count() > 0)
+        <img src="{{ Storage::url($article->images->first()->path) }}" class="card-img-top img-cover" alt="{{ $article->title }}" style="height: 200px;">
+    @endif
+    <div class="card-body">
+        <h5 class="card-title">{{ $article->title }}</h5>
+        <p class="card-text text-truncate-2">{{ $article->body }}</p>
+        <p class="card-text">
+            <strong>Prezzo:</strong> €{{ number_format($article->price, 2) }}
+        </p>
+        <p class="card-text">
+            <small class="text-muted">
+                Categoria: {{ $article->category->name }}
+            </small>
+        </p>
+        <a href="{{ route('article.show', $article) }}" class="btn btn-primary">Leggi di più</a>
     </div>
-  </div>
+    <div class="card-footer text-muted">
+        Pubblicato il {{ $article->created_at->format('d/m/Y') }} da {{ $article->user->name }}
+    </div>
 </div>
